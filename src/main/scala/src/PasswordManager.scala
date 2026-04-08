@@ -5,7 +5,7 @@ import model.User
 import src.password.checker.{Custom, Predefined}
 import src.password.{AddPassword, DeletePassword, GeneratePassword, UpdatePassword, ViewPassword}
 import src.user.{Login, Signup}
-import utils.{DBConnection, GenerateObjects, UserInput, Validations}
+import utils.{Colors, DBConnection, GenerateObjects, UserInput, Validations}
 
 import java.sql.Connection
 import scala.io.StdIn
@@ -16,8 +16,6 @@ object PasswordManager {
   
 //  Util Classes
   private val db = new Database()
-  private val input = new UserInput()
-  private val generate = new GenerateObjects()
   private val validate = new Validations()
   
 //  User Classes
@@ -32,14 +30,6 @@ object PasswordManager {
   private val generatePass = new GeneratePassword()
   private val checkPredefinedPassword = new Predefined()
   private val checkCustomPassword = new Custom()
-
-  //  Colors
-  private val redColor = "\n\u001B[91m"
-  private val resetColor = "\u001B[0m"
-  private val cyanColor = "\n\u001B[96m"
-  private val greenColor = "\n\u001B[92m"
-  private val yellowColor = "\n\u001B[93m"
-  val textBold = "\u001B[1m"
 
   def main(args: Array[String]): Unit = {
     println("----- Welcome to Password Manager -----\n")
@@ -59,7 +49,7 @@ object PasswordManager {
         case 3 => resetPassword()
         case 4 => return
 
-        case _ => println(redColor + "Invalid Option Number!" + resetColor)
+        case _ => println(Colors.redColor + "Invalid Option Number!" + Colors.resetColor)
       }
     }
   }
@@ -92,7 +82,7 @@ object PasswordManager {
         case 6 => checkPasswordStrength()
         case 7 => return
 
-        case _ => println(redColor + "\nInvalid Option Number!\n" + resetColor)
+        case _ => println(Colors.redColor + "\nInvalid Option Number!\n" + Colors.resetColor)
       }
     }
 
@@ -101,23 +91,23 @@ object PasswordManager {
     }
 
     def storePassword(): Unit = {
-      addPassword.addPassword(user, db, input, generate, validate)
+      addPassword.addPassword(user, db, validate)
     }
 
     def editPassword(): Unit = {
-      updatePassword.editPassword(user, db, input, validate)
+      updatePassword.editPassword(user, db, validate)
     }
 
     def deletePassword(): Unit = {
-      removePassword.removePassword(user, db, input)
+      removePassword.removePassword(user, db)
     }
 
     def generatePassword(): Unit = {
-      generatePass.generate(input)
+      generatePass.generate()
     }
 
     def checkPasswordStrength(): Unit = {
-      println(cyanColor + "\n----- Password Checker -----" + resetColor)
+      println(Colors.cyanColor + "\n----- Password Checker -----" + Colors.resetColor)
       print("1. View Stored Passwords\n2. Enter a Password\nEnter your Option Number : ")
       val userChoice = StdIn.readLine().toInt
 
@@ -127,17 +117,17 @@ object PasswordManager {
       }
 
       def checkStoredPasswords(): Unit = {
-        checkPredefinedPassword.checkPassword(user, db, input)
+        checkPredefinedPassword.checkPassword(user, db)
       }
 
       def typePassword(): Unit = {
-        checkCustomPassword.checkPassword(input)
+        checkCustomPassword.checkPassword()
       }
     }
   }
 
 
   private def resetPassword(): Unit = {
-    println(redColor + "\nNot Available!\n" + resetColor)
+    println(Colors.redColor + "\nNot Available!\n" + Colors.resetColor)
   }
 }

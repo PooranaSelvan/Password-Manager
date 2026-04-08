@@ -2,20 +2,16 @@ package utils
 import scala.util.control.Breaks.*
 
 class Validations {
-  val input = UserInput()
-  private val redColor = "\n\u001B[91m"
-  private val resetColor = "\u001B[0m"
-
   def validateEmail(message: String): String = {
     val pattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$".r
     var userEmail = ""
 
     breakable {
       while (true) {
-        userEmail = input.getUserInput(message)
+        userEmail = UserInput.getUserInput(message)
 
         if (userEmail.isEmpty || !userEmail.matches(pattern.regex)) {
-          println(redColor + "Invalid Email Format" + resetColor)
+          println(Colors.redColor + "Invalid Email Format" + Colors.resetColor)
         } else {
           break
         }
@@ -31,10 +27,10 @@ class Validations {
     
     breakable {
       while(true) {
-        userPhone = input.getUserInput(message)
+        userPhone = UserInput.getUserInput(message)
         
         if(userPhone.isEmpty || !userPhone.matches(pattern.regex)) {
-          println(redColor + "Invalid Phone Number Format" + resetColor)
+          println(Colors.redColor + "Invalid Phone Number Format" + Colors.resetColor)
         } else {
           break
         }
@@ -50,10 +46,10 @@ class Validations {
     
     breakable {
       while(true) {
-        userDate = input.getUserInput(message)
+        userDate = UserInput.getUserInput(message)
         
         if(userDate.isEmpty || !userDate.matches(pattern.regex)) {
-          println(redColor + "Invalid Date Format" + resetColor)
+          println(Colors.redColor + "Invalid Date Format" + Colors.resetColor)
         } else {
           break
         }

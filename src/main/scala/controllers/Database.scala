@@ -9,7 +9,6 @@ import scala.collection.mutable.ArrayBuffer
 
 class Database {
   val conn: Connection = DBConnection.conn;
-  val generate = new GenerateObjects()
 
   def selectUserByEmail(email: String): User = {
       val ps = conn.prepareStatement(Queries.selectUserByEmailQuery)
@@ -25,7 +24,7 @@ class Database {
         val phone = rs.getString("phone")
         val recoveryEmail = rs.getString("recovery_email")
 
-        return generate.generateUserObject(id, name, email, password, recoveryEmail, phone)
+        return GenerateObjects.generateUserObject(id, name, email, password, recoveryEmail, phone)
       }
 
       return null
@@ -48,7 +47,7 @@ class Database {
     val rs = ps.getGeneratedKeys
 
     if(rs.next()) {
-      return generate.generateUserObject(rs.getInt(1), user.name, user.email, user.password, user.recovery_email, user.phone)
+      return GenerateObjects.generateUserObject(rs.getInt(1), user.name, user.email, user.password, user.recovery_email, user.phone)
     }
 
     return null
@@ -71,7 +70,7 @@ class Database {
       val importance = PassImportance.valueOf(rs.getString("importance").capitalize)
       val expiryDate = rs.getString("expiry_date")
 
-      passwords += generate.generatePasswordObject(id, userId, serviceName, password, category, note, importance, expiryDate)
+      passwords += GenerateObjects.generatePasswordObject(id, userId, serviceName, password, category, note, importance, expiryDate)
     }
 
     if(passwords.isEmpty) {
@@ -96,7 +95,7 @@ class Database {
       val importance = PassImportance.valueOf(rs.getString("importance").capitalize)
       val expiryDate = rs.getString("expiry_date")
 
-      return generate.generatePasswordObject(passId, userId, serviceName, password, category, note, importance, expiryDate)
+      return GenerateObjects.generatePasswordObject(passId, userId, serviceName, password, category, note, importance, expiryDate)
     }
 
     return null
@@ -121,7 +120,7 @@ class Database {
     val rs = ps.getGeneratedKeys
 
     if(rs.next()) {
-      return generate.generatePasswordObject(rs.getInt(1), pass.userId, pass.serviceName, pass.password, pass.category, pass.note, pass.importance, pass.expiryDate)
+      return GenerateObjects.generatePasswordObject(rs.getInt(1), pass.userId, pass.serviceName, pass.password, pass.category, pass.note, pass.importance, pass.expiryDate)
     }
 
     return null

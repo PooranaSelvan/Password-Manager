@@ -2,30 +2,25 @@ package src.password
 import controllers.Database
 import model.{PassImportance, User}
 import src.password.ViewPassword
-import utils.{UserInput, Validations}
+import utils.{Colors, UserInput, Validations}
 
 import scala.io.StdIn
 
 
 class UpdatePassword {
   private val view = new ViewPassword()
-  private val redColor = "\n\u001B[91m"
-  private val resetColor = "\u001B[0m"
-  private val cyanColor = "\n\u001B[96m"
-  private val greenColor = "\n\u001B[92m"
-  private val yellowColor = "\n\u001B[93m"
   val textBold = "\u001B[1m"
 
-  def editPassword(user: User, db: Database, input: UserInput, validate: Validations): Unit = {
+  def editPassword(user: User, db: Database, validate: Validations): Unit = {
     view.viewPasswords(user, db)
 
-    println(cyanColor + "\n----- Edit Password Details -----" + resetColor)
-    val passId = input.getUserInputInt("Enter the Password ID to Edit : ")
+    println(Colors.cyanColor + "\n----- Edit Password Details -----" + Colors.resetColor)
+    val passId = UserInput.getUserInputInt("Enter the Password ID to Edit : ")
 
     val pass = db.getPasswordById(passId)
 
     if (pass == null) {
-      println(redColor + "There is no Password in this ID!" + resetColor)
+      println(Colors.redColor + "There is no Password in this ID!" + Colors.resetColor)
       return
     }
 
@@ -35,13 +30,13 @@ class UpdatePassword {
 
     userChoice match {
       case 1 =>
-        pass.serviceName = input.getUserInput("Enter the New Service Name : ")
+        pass.serviceName = UserInput.getUserInput("Enter the New Service Name : ")
       case 2 =>
-        pass.password = input.getUserInput("Enter the New Password : ")
+        pass.password = UserInput.getUserInput("Enter the New Password : ")
       case 3 =>
-        pass.category = input.getUserInput("Enter the New Category : ")
+        pass.category = UserInput.getUserInput("Enter the New Category : ")
       case 4 =>
-        pass.note = input.getUserInput("Enter the New Note : ")
+        pass.note = UserInput.getUserInput("Enter the New Note : ")
       case 5 =>
         print("Enter the New Importance (Low, Medium, High) : ")
         pass.importance = PassImportance.valueOf(StdIn.readLine())
@@ -49,15 +44,15 @@ class UpdatePassword {
         pass.expiryDate = validate.validateDate("Enter the Expiry Date of the Password (dd:mm:yyyy) : ")
       case 7 => return
 
-      case _ => println(redColor + "\nInvalid Option Number!\n" + resetColor)
+      case _ => println(Colors.redColor + "\nInvalid Option Number!\n" + Colors.resetColor)
     }
 
     val isUpdated = db.updatePassword(pass, user.id)
 
     if (isUpdated) {
-      println(greenColor + "\nPassword Has been Updated Successfully!\n" + resetColor)
+      println(Colors.greenColor + "\nPassword Has been Updated Successfully!\n" + Colors.resetColor)
     } else {
-      println(redColor + "\nPassword Updating Failed\n" + resetColor)
+      println(Colors.redColor + "\nPassword Updating Failed\n" + Colors.resetColor)
     }
   }
 }

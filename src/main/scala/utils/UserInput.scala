@@ -2,7 +2,7 @@ package utils
 
 import scala.io.StdIn
 
-class UserInput() {
+object UserInput {
   def getUserInput(message: String): String = {
     print(message)
     return StdIn.readLine()
