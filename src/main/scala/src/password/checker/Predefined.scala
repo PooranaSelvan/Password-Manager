@@ -6,7 +6,6 @@ import utils.{CheckPassword, Colors, UserInput}
 
 class Predefined {
   private val view = new ViewPassword()
-  val checkPassword = new CheckPassword()
 
   def checkPassword(user: User, db: Database): Unit = {
     view.viewPasswords(user, db)
@@ -20,6 +19,6 @@ class Predefined {
       return
     }
 
-    checkPassword.checkStrength(pass.password)
+    CheckPassword.checkStrength(pass.password)
   }
 }

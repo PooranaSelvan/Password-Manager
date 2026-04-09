@@ -2,7 +2,7 @@ package utils
 
 import scala.collection.mutable
 
-class CheckPassword {
+object CheckPassword {
   def checkStrength(pass: String): Unit = {
     val map = new mutable.HashMap[String, Integer]()
     map("upper") = 0

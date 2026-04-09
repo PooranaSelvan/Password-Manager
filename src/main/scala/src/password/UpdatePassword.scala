@@ -11,7 +11,7 @@ class UpdatePassword {
   private val view = new ViewPassword()
   val textBold = "\u001B[1m"
 
-  def editPassword(user: User, db: Database, validate: Validations): Unit = {
+  def editPassword(user: User, db: Database): Unit = {
     view.viewPasswords(user, db)
 
     println(Colors.cyanColor + "\n----- Edit Password Details -----" + Colors.resetColor)
@@ -41,7 +41,7 @@ class UpdatePassword {
         print("Enter the New Importance (Low, Medium, High) : ")
         pass.importance = PassImportance.valueOf(StdIn.readLine())
       case 6 =>
-        pass.expiryDate = validate.validateDate("Enter the Expiry Date of the Password (dd:mm:yyyy) : ")
+        pass.expiryDate = Validations.validateDate("Enter the Expiry Date of the Password (dd:mm:yyyy) : ")
       case 7 => return
 
       case _ => println(Colors.redColor + "\nInvalid Option Number!\n" + Colors.resetColor)

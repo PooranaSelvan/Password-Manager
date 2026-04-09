@@ -1,7 +1,7 @@
 package utils
 import scala.util.control.Breaks.*
 
-class Validations {
+object Validations {
   def validateEmail(message: String): String = {
     val pattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$".r
     var userEmail = ""

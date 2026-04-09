@@ -5,7 +5,7 @@ import model.User
 import src.password.checker.{Custom, Predefined}
 import src.password.{AddPassword, DeletePassword, GeneratePassword, UpdatePassword, ViewPassword}
 import src.user.{Login, Signup}
-import utils.{Colors, DBConnection, GenerateObjects, UserInput, Validations}
+import utils.{Colors, DBConnection}
 
 import java.sql.Connection
 import scala.io.StdIn
@@ -16,7 +16,6 @@ object PasswordManager {
   
 //  Util Classes
   private val db = new Database()
-  private val validate = new Validations()
   
 //  User Classes
   private val login = new Login()
@@ -91,11 +90,11 @@ object PasswordManager {
     }
 
     def storePassword(): Unit = {
-      addPassword.addPassword(user, db, validate)
+      addPassword.addPassword(user, db)
     }
 
     def editPassword(): Unit = {
-      updatePassword.editPassword(user, db, validate)
+      updatePassword.editPassword(user, db)
     }
 
     def deletePassword(): Unit = {

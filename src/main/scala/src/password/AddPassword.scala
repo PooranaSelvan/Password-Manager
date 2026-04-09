@@ -6,7 +6,7 @@ import utils.{Colors, GenerateObjects, UserInput, Validations}
 class AddPassword {
   val textBold = "\u001B[1m"
 
-  def addPassword(user: User, db: Database, validate: Validations): Unit = {
+  def addPassword(user: User, db: Database): Unit = {
     println(Colors.cyanColor + "\n----- Store New Password -----" + Colors.resetColor)
 
     if (user.id < 1) {
@@ -19,7 +19,7 @@ class AddPassword {
     val category = UserInput.getUserInput("Enter the Category : ")
     val note = UserInput.getUserInput("Enter the Note : ")
     val importance = UserInput.getUserInput("Enter the Importance of Password (Low --> Medium --> High) : ")
-    val expiryDate = validate.validateDate("Enter the Expiry Date of the Password (dd:mm:yyyy) : ")
+    val expiryDate = Validations.validateDate("Enter the Expiry Date of the Password (dd:mm:yyyy) : ")
 
     val parts = expiryDate.split(":")
     val isoDate = s"${parts(2)}-${parts(1)}-${parts(0)}"

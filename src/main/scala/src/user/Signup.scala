@@ -7,15 +7,13 @@ import model.User
 import scala.util.control.Breaks.*
 
 class Signup {
-  private val validate = new Validations()
-  
   def signUpUser(db: Database): User = {
     println(Colors.cyanColor + "\n----- SignUp -----" + Colors.resetColor)
 
     val userName = UserInput.getUserInput("Enter your Name : ")
-    val userEmail = validate.validateEmail("Enter your Email : ")
+    val userEmail = Validations.validateEmail("Enter your Email : ")
     val userPass = UserInput.getUserInput("Enter your Master Password : ")
-    val userPhone = validate.validatePhone("Enter your Phone : ")
+    val userPhone = Validations.validatePhone("Enter your Phone : ")
 
     var userRecEmail = ""
     breakable {
